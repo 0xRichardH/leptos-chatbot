@@ -60,27 +60,12 @@ fn HomePage(cx: Scope) -> impl IntoView {
         converse(cx, conversation.get())
     });
 
-    // display `...` when submmiting message to the server
     create_effect(cx, move |_| {
-        if send_message.input().get().is_some() {
+        if let Some(_) = send_message.input().get() {
             let model_msg = Message {
                 user: false,
-                text: String::from("..."),
-            };
-            set_conversation.update(move |c| {
-                c.messages.push(model_msg);
-            });
-        }
-    });
-
-    // display the resposne from the server
-    create_effect(cx, move |_| {
-        if let Some(Ok(msg)) = send_message.value().get() {
-            set_conversation.update(move |c| {
-                if let Some(last_msg) = c.messages.last_mut() {
-                    last_msg.text = msg;
-                }
-            });
+                text: "...".to_string(),
+            }
         }
     });
 

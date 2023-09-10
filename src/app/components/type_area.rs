@@ -11,7 +11,10 @@ const BUTTON_CLASS: &str = "h-full p-4 rounded-full cursor-pointer";
 const BUTTON_CLASS_DARK: &str = "bg-green-700 text-white";
 
 #[component]
-pub fn TypeArea(cx: Scope) -> impl IntoView {
+pub fn TypeArea(
+    cx: Scope,
+    send_message: Action<String, Result<String, ServerFnError>>,
+) -> impl IntoView {
     let input_ref = create_node_ref::<Input>(cx);
     view! {
         cx,
@@ -19,6 +22,7 @@ pub fn TypeArea(cx: Scope) -> impl IntoView {
            <form class="w-full flex justify-center items-center gap-4" on:submit=move |ev| {
                 ev.prevent_default();
                 let input = input_ref.get().expect("input to exist");
+                send_message.dispatch(input.value());
                 input.set_value("");
            }
            >
