@@ -1,3 +1,10 @@
+This is leptos + axum example.
+
+- Video: [Build A Full Stack Chatbot in Rust (feat. Leptos & Rustformers)](https://www.youtube.com/watch?v=vAjle3c9Xqc)
+- Repo: https://github.com/MoonKraken/rusty_llama/tree/build_rust_chatbot_video
+
+---
+
 <picture>
     <source srcset="https://raw.githubusercontent.com/leptos-rs/leptos/main/docs/logos/Leptos_logo_Solid_White.svg" media="(prefers-color-scheme: dark)">
     <img src="https://raw.githubusercontent.com/leptos-rs/leptos/main/docs/logos/Leptos_logo_RGB.svg" alt="Leptos Logo">
@@ -31,7 +38,17 @@ to go to your newly created project.
 Feel free to explore the project structure, but the best place to start with your application code is in `src/app.rs`.  
 Addtionally, Cargo.toml may need updating as new versions of the dependencies are released, especially if things are not working after a `cargo update`.
 
+## Language Model
+
+You'll also need to download a model (in GGML format) of your choice that is [supported by the Rustformers/llm Crate](https://huggingface.co/models?search=ggml).
+
+In the root of the project directory, you'll find a .env file where an environment variable called MODEL_PATH is defined. Replace the value with the full path to the desired model file.
+
 ## Running your project
+
+```
+bun install
+```
 
 ```bash
 bunx tailwindcss -i ./input.css -o ./style/output.css --watch
@@ -48,7 +65,6 @@ By default, `cargo-leptos` uses `nightly` Rust, `cargo-generate`, and `sass`. If
 1. `rustup toolchain install nightly --allow-downgrade` - make sure you have Rust nightly
 2. `rustup target add wasm32-unknown-unknown` - add the ability to compile Rust to WebAssembly
 3. `cargo install cargo-generate` - install `cargo-generate` binary (should be installed automatically in future)
-4. `npm install -g sass` - install `dart-sass` (should be optional in future
 
 ## Compiling for Release
 
