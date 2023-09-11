@@ -1,4 +1,4 @@
-use leptos::*;
+use leptos::{html::Div, *};
 
 use crate::model::conversation::Conversation;
 
@@ -13,13 +13,18 @@ const MODEL_MESSAGE_CLASS: &str = "max-w-md p-4 mb-5 rounded-lg self-start";
 
 #[component]
 pub fn ChatArea(cx: Scope, conversation: ReadSignal<Conversation>) -> impl IntoView {
-    // let chat_div_ref = create_node_ref::<Div>(cx);
+    let chat_div_ref = create_node_ref::<Div>(cx);
 
-    create_effect(cx, move |_| conversation.get());
+    create_effect(cx, move |_| {
+        conversation.get();
+        if let Some(div) = chat_div_ref.get() {
+            div.set_scroll_top(div.scroll_height());
+        }
+    });
 
     view! {
         cx,
-        <div class={format!("{CHAT_AREA_CLASS} {CHAT_AREA_DARK_MODE_COLORS}")} >
+        <div class={format!("{CHAT_AREA_CLASS} {CHAT_AREA_DARK_MODE_COLORS}")} node_ref=chat_div_ref>
         {move || conversation.get().messages.iter().map(move |message| {
             let class_str = if message.user {
                 format!("{USER_MESSAGE_CLASS} {USER_MESSAGE_DARK_MODE_COLORS}")
